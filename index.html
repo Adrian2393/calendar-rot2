@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
@@ -28,10 +28,11 @@
       vertical-align: middle;
     }
 
-    header p {
+    header p#periodText {
       font-family: 'Pacifico', cursive;
-      font-size: 21px;
+      font-size: 23px;  /* modificare aici */
       margin-top: 10px;
+      color: white;
     }
 
     h2 {
@@ -109,6 +110,8 @@
       overflow: hidden;
       max-width: 90%;
       height: 30px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
     }
 
     .progress-bar-inner {
@@ -131,38 +134,35 @@
     }
 
     #currentDayInfo {
-      font-family: 'Georgia', serif;
-      font-size: 22px;
+      font-family: 'Pacifico', cursive;
+      font-size: 23px;
       text-align: center;
       margin-top: 10px;
-      margin-bottom: 15px;
-      color: #1b3d1f;
-      font-weight: bold;
-    }
-
-    #countdown {
-      font-family: 'Georgia', serif;
-      font-size: 22px;
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 15px;
       color: #1b3d1f;
       font-weight: normal;
-    }
-
-    #countdown strong {
-      font-weight: bold;
     }
 
     #motivation {
       font-family: 'Pacifico', cursive;
       font-size: 24px;
       text-align: center;
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin-top: 5px;
       color: #2e7d32;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
       animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    #daysLeft {
+      font-family: 'Pacifico', cursive;
+      font-size: 23px;
+      text-align: center;
+      margin-top: 5px;
+      color: #1b3d1f;
+      font-weight: normal;
+    }
+
+    #daysLeft span.bold {
+      font-weight: bold;
     }
 
     @keyframes pulse {
@@ -178,6 +178,20 @@
         transform: scale(1);
         opacity: 1;
       }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    #countdown {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 5px;
+      color: #1b3d1f;
     }
 
     .weekday {
@@ -211,7 +225,7 @@
       <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Romania.svg" alt="România">
       <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg" alt="Bosnia și Herțegovina">
     </div>
-    <p>13 mai – 23 septembrie 2025</p>
+    <p id="periodText">Perioada 13 Mai - 23 Septembrie 2025</p>
   </header>
 
   <div class="progress-bar">
@@ -220,9 +234,10 @@
   </div>
 
   <div id="currentDayInfo"></div>
-  <div id="countdown"></div>
+  <div id="daysLeft"></div>
   <div id="motivation">Keep going, you're doing great!</div>
-
+  
+  <div id="countdown"></div>
   <div id="calendarContainer"></div>
 
   <footer>
@@ -237,27 +252,24 @@
 
     const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
     const daysPassed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+    const currentDay = daysPassed + 1;
     const daysLeft = Math.max(0, totalDays - daysPassed);
 
-    // Progress bar update
     const percent = Math.min(100, Math.floor((daysPassed / totalDays) * 100));
     document.getElementById("progressBarInner").style.width = percent + "%";
     document.getElementById("progressBarText").textContent = `Au trecut ${daysPassed} / ${totalDays} zile.`;
 
-    // Format date "07 iunie 2025"
-    const monthNames = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = monthNames[today.getMonth()];
-    const year = today.getFullYear();
-    const formattedDate = `${day} ${month} ${year}`;
+    const formattedDate = today.toLocaleDateString('ro-RO', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
 
-    // Display current date info
-    document.getElementById("currentDayInfo").textContent = `Azi e ${formattedDate}.`;
-
-    // Display days left with bold number
-    document.getElementById("countdown").innerHTML = `Au mai rămas: <strong>${daysLeft}</strong> zile.`;
+    document.getElementById("currentDayInfo").innerHTML = `Azi e ${formattedDate}.`;
+    document.getElementById("daysLeft").innerHTML = `Au mai rămas: <span class="bold">${daysLeft}</span> zile.`;
 
     const calendarContainer = document.getElementById("calendarContainer");
+    const monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie"];
     const weekdays = ["Lun", "Mar", "Mie", "Joi", "Vin", "Sâm", "Dum"];
 
     let date = new Date(startDate);
@@ -270,7 +282,7 @@
         const monthSection = document.createElement("div");
         monthSection.className = "month-section";
         const monthTitle = document.createElement("h2");
-        monthTitle.textContent = monthNames[currentMonth].charAt(0).toUpperCase() + monthNames[currentMonth].slice(1);
+        monthTitle.textContent = monthNames[currentMonth];
         monthSection.appendChild(monthTitle);
         calendarGrid = document.createElement("div");
         calendarGrid.className = "calendar";
