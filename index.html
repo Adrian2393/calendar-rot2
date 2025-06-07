@@ -133,27 +133,13 @@
       pointer-events: none;
     }
 
-    /* 🔽 Doar aici am schimbat fontul pentru claritate */
     #currentDayInfo {
-      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
+      font-family: 'Pacifico', cursive;
       font-size: 23px;
       text-align: center;
       margin-top: 10px;
       color: #1b3d1f;
       font-weight: normal;
-    }
-
-    #daysLeft {
-      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
-      font-size: 23px;
-      text-align: center;
-      margin-top: 5px;
-      color: #1b3d1f;
-      font-weight: normal;
-    }
-
-    #daysLeft span.bold {
-      font-weight: bold;
     }
 
     #motivation {
@@ -166,12 +152,17 @@
       animation: pulse 2.5s infinite ease-in-out;
     }
 
-    #countdown {
-      font-family: 'Georgia', serif;
-      font-size: 20px;
+    #daysLeft {
+      font-family: 'Pacifico', cursive;
+      font-size: 23px;
       text-align: center;
       margin-top: 5px;
       color: #1b3d1f;
+      font-weight: normal;
+    }
+
+    #daysLeft span.bold {
+      font-weight: bold;
     }
 
     @keyframes pulse {
@@ -193,6 +184,14 @@
       to {
         opacity: 1;
       }
+    }
+
+    #countdown {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 5px;
+      color: #1b3d1f;
     }
 
     .weekday {
@@ -237,6 +236,7 @@
   <div id="currentDayInfo"></div>
   <div id="daysLeft"></div>
   <div id="motivation">Keep going, you're doing great!</div>
+
   <div id="countdown"></div>
   <div id="calendarContainer"></div>
 
@@ -251,9 +251,9 @@
     today.setHours(0, 0, 0, 0);
 
     const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-    const daysPassed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-    const currentDay = daysPassed + 1;
+    const daysPassed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
     const daysLeft = Math.max(0, totalDays - daysPassed);
+    const currentDay = daysPassed;
 
     const percent = Math.min(100, Math.floor((daysPassed / totalDays) * 100));
     document.getElementById("progressBarInner").style.width = percent + "%";
