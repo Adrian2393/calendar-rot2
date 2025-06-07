@@ -30,7 +30,7 @@
 
     header p#periodText {
       font-family: 'Pacifico', cursive;
-      font-size: 23px;  /* modificare aici */
+      font-size: 23px;
       margin-top: 10px;
       color: white;
     }
@@ -133,13 +133,27 @@
       pointer-events: none;
     }
 
+    /* 🔽 Doar aici am schimbat fontul pentru claritate */
     #currentDayInfo {
-      font-family: 'Pacifico', cursive;
+      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
       font-size: 23px;
       text-align: center;
       margin-top: 10px;
       color: #1b3d1f;
       font-weight: normal;
+    }
+
+    #daysLeft {
+      font-family: 'Segoe UI', Verdana, Arial, sans-serif;
+      font-size: 23px;
+      text-align: center;
+      margin-top: 5px;
+      color: #1b3d1f;
+      font-weight: normal;
+    }
+
+    #daysLeft span.bold {
+      font-weight: bold;
     }
 
     #motivation {
@@ -152,17 +166,12 @@
       animation: pulse 2.5s infinite ease-in-out;
     }
 
-    #daysLeft {
-      font-family: 'Pacifico', cursive;
-      font-size: 23px;
+    #countdown {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
       text-align: center;
       margin-top: 5px;
       color: #1b3d1f;
-      font-weight: normal;
-    }
-
-    #daysLeft span.bold {
-      font-weight: bold;
     }
 
     @keyframes pulse {
@@ -184,14 +193,6 @@
       to {
         opacity: 1;
       }
-    }
-
-    #countdown {
-      font-family: 'Georgia', serif;
-      font-size: 20px;
-      text-align: center;
-      margin-top: 5px;
-      color: #1b3d1f;
     }
 
     .weekday {
@@ -236,7 +237,6 @@
   <div id="currentDayInfo"></div>
   <div id="daysLeft"></div>
   <div id="motivation">Keep going, you're doing great!</div>
-  
   <div id="countdown"></div>
   <div id="calendarContainer"></div>
 
